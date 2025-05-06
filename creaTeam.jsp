@@ -2,7 +2,6 @@
 <%@ page import="java.util.Vector" %>
 <%@ page import="it.unirc.nba.model.Giocatore" %>
 <%@ page import="it.unirc.nba.model.Sfida" %>
-<%@ page import="it.unirc.nba.model.Team" %>
 
 <!DOCTYPE html>
 <html lang="it">
@@ -55,36 +54,36 @@
 <div class="form-container">
     <h2 class="text-center" style="color: orange;">Crea il tuo team</h2>
 
-    <form action="/privato/utente/CreaTeam" method="POST">
-        <input type="hidden" name="idSfida" value="<%= sfida != null ? sfida.getId() : "" %>">
+    <<form action="/privato/utente/CreaTeam" method="POST">
+    <input type="hidden" name="idSfida" value="<%= sfida != null ? sfida.getId() : "" %>">
 
-        <!-- Nome Team -->
-        <div class="mb-3">
-            <label for="nomeTeam">Nome del Team:</label>
-            <input type="text" class="form-control" id="nomeTeam" name="nomeTeam" required>
-        </div>
+    <!-- Nome Team -->
+    <div class="mb-3">
+        <label for="nomeTeam">Nome del Team:</label>
+        <input type="text" class="form-control" id="nomeTeam" name="nomeTeam" required>
+    </div>
 
-        <% String[] ruoli = {"PG", "SG", "SF", "PF", "C"}; %>
-        <% if (giocatori != null && !giocatori.isEmpty()) {
-            for (String ruolo : ruoli) { %>
-                <div class="mb-3">
-                    <label for="<%= ruolo.toLowerCase() %>"><%= ruolo %>:</label>
-                    <select class="form-control" name="<%= ruolo.toLowerCase() %>" id="<%= ruolo.toLowerCase() %>" required>
-                        <option value="">-- Seleziona un giocatore --</option>
-                        <% for (Giocatore g : giocatori) {
-                            if (g.getRuolo().equalsIgnoreCase(ruolo)) { %>
-                                <option value="<%= g.getId() %>">
-                                    <%= g.getNome() %> - <%= g.getNazionalita() %>
-                                </option>
-                        <% } } %>
-                    </select>
-                </div>
-        <% } } else { %>
-            <div class="alert alert-danger">Nessun giocatore disponibile!</div>
-        <% } %>
+    <% String[] ruoli = {"PG", "SG", "SF", "PF", "C"}; %>
+    <% if (giocatori != null && !giocatori.isEmpty()) {
+        for (String ruolo : ruoli) { %>
+            <div class="mb-3">
+                <label for="<%= ruolo.toLowerCase() %>"><%= ruolo %>:</label>
+                <select class="form-control" name="giocatoriSelezionati_<%= ruolo %>" id="<%= ruolo.toLowerCase() %>" required>
+                    <option value="">-- Seleziona un giocatore --</option>
+                    <% for (Giocatore g : giocatori) {
+                        if (g.getRuolo().equalsIgnoreCase(ruolo)) { %>
+                            <option value="<%= g.getId() %>">
+                                <%= g.getNome() %> - <%= g.getNazionalita() %>
+                            </option>
+                    <% } } %>
+                </select>
+            </div>
+    <% } } else { %>
+        <div class="alert alert-danger">Nessun giocatore disponibile!</div>
+    <% } %>
 
-        <button type="submit" class="btn btn-action">Crea Team</button>
-    </form>
+    <button type="submit" class="btn btn-action">Crea Team</button>
+</form>
 </div>
 
 </body>
